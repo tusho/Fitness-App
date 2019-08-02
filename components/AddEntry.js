@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { getMetricMetaInfo } from '../utils/helpers'
 import Slider from './Slider'
 import Steppers from './Steppers'
+import DateHeader from './DateHeader'
 
 export default class AddEntry extends Component {
     
@@ -55,6 +56,7 @@ export default class AddEntry extends Component {
 
           return (
             <View key={key}>
+            <DateHeader date={(new Date()).toLocaleDateString()}/>
               {getIcon()}
               {type === 'slider'
                 ? <Slider
