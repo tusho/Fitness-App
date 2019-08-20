@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, Platform, StatusBar, SafeAreaView } from 'react-native'
+import { View, Platform, StatusBar } from 'react-native'
 import AddEntry from './components/AddEntry'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import History from './components/History'
-import { createAppContainer, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
+import { createAppContainer, createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'
 import { white, purple } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
+import EntryDetail from './components/EntryDetail'
 
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
@@ -35,6 +36,26 @@ const Tabs = {
   },
 }
 
+const TabNav = createAppContainer(Platform.OS === 'ios' ? createBottomTabNavigator(Tabs, navigationOptions) : createMaterialTopTabNavigator(Tabs, navigationOptions))
+
+const MainNavigator = createAppContainer(createStackNavigator({
+  home: {
+    screen: TabNav,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  EntryDetail: {
+    screen: EntryDetail,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+    }),
+  },
+}));
+
 const navigationOptions = {
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? purple : white,
@@ -52,16 +73,13 @@ const navigationOptions = {
   }
 }
 
-const TabNav = createAppContainer(Platform.OS === 'ios' ? createBottomTabNavigator(Tabs, navigationOptions) : createMaterialTopTabNavigator(Tabs, navigationOptions))
-
-
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <MyStatusBar backgroundColor={purple} barStyle="light-content" />
-          <TabNav />
+          <MainNavigator />
         </View>
       </Provider>
     )
