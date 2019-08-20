@@ -10,6 +10,7 @@ import { white, purple } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import EntryDetail from './components/EntryDetail'
+import Live from './components/Live'
 
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
@@ -34,6 +35,13 @@ const Tabs = {
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     },
   },
+  Live: {
+    screen: Live,
+    navigationOptions: {
+      tabBarLabel: 'Live',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor} />
+    }
+  }
 }
 
 const TabNav = createAppContainer(Platform.OS === 'ios' ? createBottomTabNavigator(Tabs, navigationOptions) : createMaterialTopTabNavigator(Tabs, navigationOptions))
