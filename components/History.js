@@ -70,6 +70,7 @@ class History extends Component {
             items={entries}
             renderItem={this.renderItem}
             renderEmptyDate={this.renderEmptyDate}
+            style={{marginTop: 40}}
         />
     )
   }
