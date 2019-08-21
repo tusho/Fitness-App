@@ -11,6 +11,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import EntryDetail from './components/EntryDetail'
 import Live from './components/Live'
+import { setLocalNotification } from './utils/helpers'
 
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
@@ -82,6 +83,11 @@ const navigationOptions = {
 }
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
@@ -92,4 +98,5 @@ export default class App extends React.Component {
       </Provider>
     )
   }
+  
 }
